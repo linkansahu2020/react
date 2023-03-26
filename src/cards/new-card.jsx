@@ -4,13 +4,10 @@ import "react-credit-cards/es/styles-compiled.css";
 import { fetchWrapper } from "_helpers";
 import cogoToast from "cogo-toast";
 
-// import SupportedCards from "./Cards";
-
 import {
   formatCreditCardNumber,
   formatCVC,
   formatExpirationDate,
-  formatFormData,
 } from "./utils";
 
 export default function NewCard() {
@@ -22,6 +19,13 @@ export default function NewCard() {
     issuer: "",
     focused: "",
   });
+
+  function getRandomItem(arr) {
+    const randomIndex = Math.floor(Math.random() * arr.length);
+    const item = arr[randomIndex];
+    return item;
+  }
+
   const handleCallback = ({ issuer }, isValid) => {
     if (isValid) {
       setState((prev) => ({ ...prev, issuer }));
@@ -43,7 +47,6 @@ export default function NewCard() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const { issuer } = state;
     const formData = [...e.target.elements]
       .filter((d) => d.name)
       .reduce((acc, d) => {
@@ -51,16 +54,14 @@ export default function NewCard() {
         return acc;
       }, {});
 
-    console.log(formData, state);
-
     const baseUrl = `${process.env.REACT_APP_API_URL}/cards`;
 
     const response = await fetchWrapper.post(baseUrl, {
-      name: "",
+      name: formData.name,
       cardExpiration: formData.expiry,
       cardHolder: formData.name,
       cardNumber: formData.number,
-      category: "",
+      category: getRandomItem(["MC", "VISA", "AE"]),
     });
     if (response?.id) {
       setState({
@@ -103,7 +104,6 @@ export default function NewCard() {
             onChange={handleInputChange}
             onFocus={handleInputFocus}
           />
-          {/* <small>E.g.: 49..., 51..., 36..., 37...</small> */}
         </div>
         <div className="form-group">
           <input

@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { fetchWrapper } from "_helpers";
-import { store } from "_store";
 
 // create slice
 
-const name = "users";
+const name = "cards";
 const initialState = createInitialState();
 const extraActions = createExtraActions();
 const extraReducers = createExtraReducers();
@@ -13,19 +12,19 @@ const slice = createSlice({ name, initialState, extraReducers });
 
 // exports
 
-export const userActions = { ...slice.actions, ...extraActions };
-export const usersReducer = slice.reducer;
+export const cardsActions = { ...slice.actions, ...extraActions };
+export const cardsReducer = slice.reducer;
 
 // implementation
 
 function createInitialState() {
   return {
-    user: {},
+    cards: {},
   };
 }
 
 function createExtraActions() {
-  const baseUrl = `${process.env.REACT_APP_API_URL}/users`;
+  const baseUrl = `${process.env.REACT_APP_API_URL}/cards`;
 
   return {
     getAll: getAll(),
@@ -48,13 +47,13 @@ function createExtraReducers() {
     var { pending, fulfilled, rejected } = extraActions.getAll;
     return {
       [pending]: (state) => {
-        state.user = { loading: true };
+        state.cards = { loading: true };
       },
       [fulfilled]: (state, action) => {
-        state.user = action.payload;
+        state.cards = action.payload;
       },
       [rejected]: (state, action) => {
-        state.user = { error: action.error };
+        state.cards = { error: action.error };
       },
     };
   }
