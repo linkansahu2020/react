@@ -1,15 +1,18 @@
 {
-    "name": "react-intern-assignment",
+    "name": "react",
     "version": "1.0.0",
     "repository": {
-      "type": "git",
-      "url": "https://github.com/sobingt/react-intern-assignment"
+        "type": "git",
+        "url": "https://github.com/sobingt/react-intern-assignment"
     },
     "private": true,
     "dependencies": {
         "@hookform/resolvers": "^2.9.0",
         "@reduxjs/toolkit": "^1.8.2",
+        "cogo-toast": "^4.2.3",
+        "payment": "^2.4.6",
         "react": "^18.1.0",
+        "react-credit-cards": "^0.8.3",
         "react-dom": "^18.1.0",
         "react-hook-form": "^7.31.3",
         "react-redux": "^8.0.2",

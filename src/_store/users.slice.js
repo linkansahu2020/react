@@ -1,10 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { fetchWrapper } from '_helpers';
+import { fetchWrapper } from "_helpers";
+import { store } from "_store";
 
 // create slice
 
-const name = 'users';
+const name = "users";
 const initialState = createInitialState();
 const extraActions = createExtraActions();
 const extraReducers = createExtraReducers();
@@ -18,43 +19,43 @@ export const usersReducer = slice.reducer;
 // implementation
 
 function createInitialState() {
-    return {
-        users: {}
-    }
+  return {
+    user: {},
+  };
 }
 
 function createExtraActions() {
-    const baseUrl = `${process.env.REACT_APP_API_URL}/users`;
+  const baseUrl = `${process.env.REACT_APP_API_URL}/users`;
 
-    return {
-        getAll: getAll()
-    };    
+  return {
+    getAll: getAll(),
+  };
 
-    function getAll() {
-        return createAsyncThunk(
-            `${name}/getAll`,
-            async () => await fetchWrapper.get(baseUrl)
-        );
-    }
+  function getAll() {
+    return createAsyncThunk(
+      `${name}/getAll`,
+      async () => await fetchWrapper.get(baseUrl)
+    );
+  }
 }
 
 function createExtraReducers() {
-    return {
-        ...getAll()
-    };
+  return {
+    ...getAll(),
+  };
 
-    function getAll() {
-        var { pending, fulfilled, rejected } = extraActions.getAll;
-        return {
-            [pending]: (state) => {
-                state.users = { loading: true };
-            },
-            [fulfilled]: (state, action) => {
-                state.users = action.payload;
-            },
-            [rejected]: (state, action) => {
-                state.users = { error: action.error };
-            }
-        };
-    }
+  function getAll() {
+    var { pending, fulfilled, rejected } = extraActions.getAll;
+    return {
+      [pending]: (state) => {
+        state.user = { loading: true };
+      },
+      [fulfilled]: (state, action) => {
+        state.user = action.payload;
+      },
+      [rejected]: (state, action) => {
+        state.user = { error: action.error };
+      },
+    };
+  }
 }
